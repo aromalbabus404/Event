@@ -1,0 +1,962 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EventMarket | Our Vendors</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-pale: #f5e9c8;
+    --deep: #0e0818;
+    --plum: #1e0a32;
+    --wine: #3a0040;
+    --cream: #fdf8f0;
+    --ivory: #f9f3e8;
+    --text-muted: #9b8a6e;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--deep);
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--deep); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+/* ─── NAVBAR ─────────────────────────────────── */
+.navbar {
+    background: transparent;
+    padding: 20px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.5s ease;
+}
+.navbar.scrolled {
+    background: rgba(14, 8, 24, 0.97);
+    padding: 12px 0;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+}
+.navbar-brand {
+    font-family: 'Cinzel', serif;
+    color: var(--gold) !important;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-decoration: none;
+}
+.navbar-brand span { color: white; font-weight: 400; }
+
+.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-links a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+    white-space: nowrap;
+}
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after { width: 100%; }
+.nav-links a.active { color: var(--gold); }
+.nav-links a.active::after { width: 100%; }
+
+.nav-cta {
+    background: transparent !important;
+    border: 1px solid var(--gold) !important;
+    color: var(--gold) !important;
+    padding: 8px 22px !important;
+    border-radius: 0 !important;
+    letter-spacing: 2px !important;
+    transition: all 0.3s !important;
+}
+.nav-cta:hover {
+    background: var(--gold) !important;
+    color: var(--deep) !important;
+}
+.nav-cta::after { display: none !important; }
+
+/* ─── PAGE HERO ─────────────────────────────── */
+.page-hero {
+    height: 52vh;
+    min-height: 380px;
+    background: linear-gradient(
+        135deg,
+        rgba(14, 8, 24, 0.78),
+        rgba(58, 0, 64, 0.62)
+    ),
+    url('{% static "body.jpg" %}');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+.page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 80%, rgba(201,168,76,0.07) 0%, transparent 70%);
+    pointer-events: none;
+}
+.hero-frame {
+    position: absolute;
+    inset: 32px;
+    border: 1px solid rgba(201,168,76,0.25);
+    pointer-events: none;
+}
+.hero-frame::before, .hero-frame::after {
+    content: '';
+    position: absolute;
+    background: var(--gold);
+}
+.hero-frame::before { top: -1px; left: 40px; right: 40px; height: 1px; }
+.hero-frame::after  { bottom: -1px; left: 40px; right: 40px; height: 1px; }
+
+.page-hero-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.3s forwards;
+}
+.page-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 5vw, 4.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 18px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.5s forwards;
+}
+.page-hero h1 em { font-style: italic; color: var(--gold-light); }
+.page-hero p {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.65);
+    max-width: 420px;
+    margin: 0 auto;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.7s forwards;
+}
+
+/* ─── MARQUEE STRIP ──────────────────────────── */
+.marquee-strip {
+    background: var(--gold);
+    padding: 13px 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.marquee-track {
+    display: inline-flex;
+    animation: marquee 25s linear infinite;
+}
+.marquee-item {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--deep);
+    padding: 0 48px;
+}
+.marquee-dot { color: rgba(14,8,24,0.4); }
+
+/* ─── FILTER BAR ─────────────────────────────── */
+.filter-bar {
+    background: var(--deep);
+    padding: 28px 0;
+    position: sticky;
+    top: 64px;
+    z-index: 100;
+    border-bottom: 1px solid rgba(201,168,76,0.12);
+}
+.filter-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.filter-tab {
+    background: transparent;
+    border: 1px solid rgba(201,168,76,0.25);
+    color: rgba(255,255,255,0.55);
+    padding: 7px 20px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+.filter-tab:hover { border-color: var(--gold); color: var(--gold); }
+.filter-tab.active { background: var(--gold); border-color: var(--gold); color: var(--deep); }
+
+.search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+}
+.search-wrap input {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,76,0.2);
+    color: white;
+    padding: 9px 16px 9px 40px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 300;
+    outline: none;
+    width: 100%;
+    border-radius: 0;
+    transition: border-color 0.3s;
+    letter-spacing: 0.5px;
+}
+.search-wrap input::placeholder { color: rgba(255,255,255,0.3); }
+.search-wrap input:focus { border-color: rgba(201,168,76,0.5); }
+.search-wrap i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(201,168,76,0.5);
+    font-size: 0.85rem;
+    pointer-events: none;
+}
+.sort-select {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,76,0.2);
+    color: rgba(255,255,255,0.6);
+    padding: 9px 16px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 300;
+    outline: none;
+    border-radius: 0;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: border-color 0.3s;
+}
+.sort-select:focus { border-color: rgba(201,168,76,0.5); }
+.sort-select option { background: var(--deep); color: white; }
+
+/* ─── VENDOR GRID ─────────────────────────────── */
+.vendors-section {
+    padding: 80px 0 100px;
+    background: var(--ivory);
+}
+.results-meta {
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-bottom: 40px;
+}
+.results-meta span { color: var(--gold); font-weight: 500; }
+
+/* Vendor Card */
+.vendor-card {
+    background: white;
+    border: 1px solid rgba(201,168,76,0.12);
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+    position: relative;
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.vendor-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+    transform: scaleX(0);
+    transition: transform 0.4s;
+    z-index: 3;
+}
+.vendor-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.12); border-color: rgba(201,168,76,0.3); }
+.vendor-card:hover::before { transform: scaleX(1); }
+
+.vendor-img-wrap {
+    position: relative;
+    height: 210px;
+    overflow: hidden;
+}
+.vendor-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.vendor-card:hover .vendor-img-wrap img { transform: scale(1.07); }
+.vendor-img-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(14,8,24,0.35) 0%, transparent 60%);
+}
+
+.vendor-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: var(--deep);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    z-index: 2;
+}
+
+.vendor-category-pill {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    background: rgba(14,8,24,0.75);
+    color: var(--gold-light);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.58rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    z-index: 2;
+    backdrop-filter: blur(4px);
+}
+
+.vendor-body {
+    padding: 22px 22px 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.vendor-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--deep);
+    margin-bottom: 6px;
+    letter-spacing: 0.3px;
+}
+.vendor-location {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.vendor-location i { font-size: 0.7rem; color: var(--gold); }
+.vendor-desc {
+    font-size: 0.82rem;
+    color: #666;
+    font-weight: 300;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    flex: 1;
+}
+
+.vendor-footer {
+    padding: 14px 22px 20px;
+    border-top: 1px solid rgba(201,168,76,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+.vendor-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    letter-spacing: 0.5px;
+}
+.vendor-price strong {
+    font-size: 1.15rem;
+    color: var(--deep);
+    font-weight: 600;
+}
+.btn-vendor {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 7px 20px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-radius: 0;
+    text-decoration: none;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+.btn-vendor:hover { background: var(--gold); color: var(--deep); }
+
+/* ─── EMPTY STATE ────────────────────────────── */
+.empty-state {
+    text-align: center;
+    padding: 80px 20px;
+}
+.empty-state i {
+    font-size: 3rem;
+    color: rgba(201,168,76,0.3);
+    margin-bottom: 20px;
+    display: block;
+}
+.empty-state h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--deep);
+    margin-bottom: 10px;
+}
+.empty-state p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 300;
+}
+
+/* ─── CTA BANNER ─────────────────────────────── */
+.cta-banner {
+    background: linear-gradient(135deg, var(--plum), var(--wine));
+    padding: 90px 0;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+.cta-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 60% 80% at 20% 50%, rgba(201,168,76,0.1) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(201,168,76,0.08) 0%, transparent 60%);
+}
+.cta-ornament {
+    color: var(--gold);
+    font-size: 1.5rem;
+    letter-spacing: 12px;
+    opacity: 0.5;
+    margin-bottom: 24px;
+}
+.cta-banner h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    font-weight: 300;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    position: relative;
+}
+.cta-banner h2 em { font-style: italic; color: var(--gold-light); }
+.cta-banner p {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.95rem;
+    font-weight: 300;
+    margin-bottom: 40px;
+    max-width: 420px;
+    margin-left: auto; margin-right: auto;
+    line-height: 1.8;
+    position: relative;
+}
+.btn-gold {
+    background: var(--gold);
+    color: var(--deep);
+    border: none;
+    padding: 14px 40px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    border-radius: 0;
+    text-decoration: none;
+    transition: all 0.3s;
+    display: inline-block;
+    position: relative;
+}
+.btn-gold:hover {
+    background: var(--gold-light);
+    color: var(--deep);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(201,168,76,0.35);
+}
+
+/* ─── FOOTER ─────────────────────────────────── */
+footer {
+    background: var(--deep);
+    padding: 70px 0 28px;
+    border-top: 1px solid rgba(201,168,76,0.15);
+}
+.footer-brand {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+    display: block;
+}
+.footer-tagline {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.35);
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin-bottom: 32px;
+}
+.footer-heading {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+}
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: 10px; }
+.footer-links a {
+    color: rgba(255,255,255,0.45);
+    text-decoration: none;
+    font-size: 0.83rem;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    transition: color 0.3s;
+}
+.footer-links a:hover { color: var(--gold); }
+.footer-divider {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin: 48px 0 24px;
+}
+.footer-bottom {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 1px;
+}
+.footer-socials { display: flex; gap: 20px; }
+.social-link {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(201,168,76,0.25);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+}
+.social-link:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.08); }
+
+/* ─── ANIMATIONS ─────────────────────────────── */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+.reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ─── RESPONSIVE ─────────────────────────────── */
+@media (max-width: 991px) {
+    .navbar-collapse {
+        background: rgba(14, 8, 24, 0.98);
+        backdrop-filter: blur(16px);
+        border-top: 1px solid rgba(201,168,76,0.15);
+        margin-top: 12px;
+        padding: 8px 0 16px;
+    }
+    .nav-links {
+        display: flex !important;
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+    }
+    .nav-links a {
+        padding: 13px 24px;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        font-size: 0.82rem;
+        letter-spacing: 2px;
+    }
+    .nav-links a::after { display: none; }
+    .nav-cta {
+        margin: 14px 24px 4px !important;
+        display: block;
+        text-align: center;
+        padding: 12px 24px !important;
+    }
+    .filter-bar { top: 56px; }
+}
+@media (max-width: 768px) {
+    .hero-frame { inset: 16px; }
+    .filter-tabs { gap: 6px; }
+    .filter-tab { padding: 6px 14px; font-size: 0.65rem; }
+    .vendor-img-wrap { height: 180px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ─── NAVBAR ─────────────────────────────────── -->
+<nav class="navbar navbar-expand-lg" id="mainNav">
+<div class="container">
+    <a class="navbar-brand" href="/">💍 Event<span>Market</span></a>
+    <button class="navbar-toggler" type="button"
+        data-bs-toggle="collapse" data-bs-target="#navMenu"
+        aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation"
+        style="border:1px solid rgba(201,168,76,0.45); padding:7px 10px; background:transparent;">
+        <span style="display:block;width:22px;height:2px;background:var(--gold);margin:5px 0;"></span>
+        <span style="display:block;width:22px;height:2px;background:var(--gold);margin:5px 0;"></span>
+        <span style="display:block;width:22px;height:2px;background:var(--gold);margin:5px 0;"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+        <div class="nav-links ms-auto align-items-center">
+            <a href="/">Home</a>
+            <a href="{% url 'vendor_register' %}" class="nav-cta">Vendor Register</a>
+        </div>
+    </div>
+</div>
+</nav>
+
+<!-- ─── PAGE HERO ──────────────────────────────── -->
+<section class="page-hero">
+    <div class="hero-frame"></div>
+    <div class="container text-center position-relative" style="z-index:2">
+        <p class="page-hero-eyebrow">Kerala's Finest Wedding Professionals</p>
+        <h1>Our <em>Curated</em> Vendors</h1>
+        <p>Handpicked, verified, and passionate about making your wedding extraordinary.</p>
+    </div>
+</section>
+
+<!-- ─── MARQUEE STRIP ──────────────────────────── -->
+<div class="marquee-strip">
+    <div class="marquee-track">
+        <span class="marquee-item">Photography <span class="marquee-dot">✦</span></span>
+        <span class="marquee-item">Floral Design <span class="marquee-dot">✦</span></span>
+        <span class="marquee-item">Luxury Catering <span class="marquee-dot">✦</span></span>
+        <span class="marquee-item">Live Music <span class="marquee-dot">✦</span></span>
+        <span class="marquee-item">Bridal Beauty <span class="marquee-dot">✦</span></span>
+        <span class="marquee-item">Wedding Transport <span class="marquee-dot">✦</span></span>
+        <span class="marquee-item">Decoration <span class="marquee-dot">✦</span></span>
+        <span class="marquee-item">Photography <span class="marquee-dot">✦</span></span>
+        <span class="marquee-item">Floral Design <span class="marquee-dot">✦</span></span>
+        <span class="marquee-item">Luxury Catering <span class="marquee-dot">✦</span></span>
+        <span class="marquee-item">Live Music <span class="marquee-dot">✦</span></span>
+        <span class="marquee-item">Bridal Beauty <span class="marquee-dot">✦</span></span>
+        <span class="marquee-item">Wedding Transport <span class="marquee-dot">✦</span></span>
+        <span class="marquee-item">Decoration <span class="marquee-dot">✦</span></span>
+    </div>
+</div>
+
+<!-- ─── FILTER BAR ─────────────────────────────── -->
+<div class="filter-bar">
+    <div class="container">
+        <div class="row g-3 align-items-center">
+            <div class="col-12 col-lg-8">
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all">All Vendors</button>
+                    <button class="filter-tab" data-filter="photography">Photography</button>
+                    <button class="filter-tab" data-filter="catering">Catering</button>
+                    <button class="filter-tab" data-filter="decoration">Decoration</button>
+                    <button class="filter-tab" data-filter="music">Music</button>
+                    <button class="filter-tab" data-filter="transport">Transport</button>
+                    <button class="filter-tab" data-filter="beauty">Beauty</button>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4">
+                <div class="d-flex gap-2">
+                    <div class="search-wrap flex-grow-1">
+                        <i class="bi bi-search"></i>
+                        <input type="text" id="vendorSearch" placeholder="Search vendors...">
+                    </div>
+                    <select class="sort-select" id="vendorSort" style="min-width:130px;">
+                        <option value="">Sort By</option>
+                        <option value="price_low">Price: Low</option>
+                        <option value="price_high">Price: High</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ─── VENDOR GRID ─────────────────────────────── -->
+<section class="vendors-section">
+    <div class="container">
+
+        <p class="results-meta reveal">
+            Showing <span id="resultCount">{{ services|length }}</span> service(s)
+        </p>
+
+        <div class="row g-4" id="vendorGrid">
+
+            {% for service in services %}
+            <div class="col-md-6 col-lg-4 reveal vendor-item"
+                 data-category="{{ service.service_category|lower }}"
+                 data-price="{{ service.price }}">
+
+                <div class="vendor-card">
+
+                    <!-- IMAGE -->
+                    <div class="vendor-img-wrap">
+                        {% if service.image %}
+                            <img src="{{ service.image.url }}" alt="{{ service.service_category }}">
+                        {% else %}
+                            <img src="{% static 'profile.png' %}" alt="No image">
+                        {% endif %}
+                        <span class="vendor-category-pill">{{ service.service_category }}</span>
+                        <span class="vendor-badge">Verified</span>
+                    </div>
+
+                    <!-- BODY -->
+                    <div class="vendor-body">
+                        <h3 class="vendor-name">{{ service.vendor.business_name }}</h3>
+                        <p class="vendor-location">
+                            <i class="bi bi-geo-alt-fill"></i>
+                            {{ service.vendor.address|truncatechars:35 }}
+                        </p>
+                        <p class="vendor-desc">{{ service.description|truncatechars:110 }}</p>
+                    </div>
+
+                    <!-- FOOTER -->
+                    <div class="vendor-footer">
+                        <div class="vendor-price">
+                            From <strong>₹{{ service.price }}</strong>
+                        </div>
+                        <a href="#" class="btn-vendor">View Profile</a>
+                    </div>
+
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12" id="noServicesMsg">
+                <div class="empty-state">
+                    <i class="bi bi-shop-window"></i>
+                    <h4>No Approved Services Yet</h4>
+                    <p>Check back soon — vendors are being verified and will appear here shortly.</p>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <!-- JS-driven empty state (shown when filter has no results) -->
+        <div class="empty-state" id="emptyState" style="display:none;">
+            <i class="bi bi-search"></i>
+            <h4>No Results Found</h4>
+            <p>Try a different category or search term.</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- ─── CTA BANNER ─────────────────────────────── -->
+<section class="cta-banner">
+    <div class="container position-relative">
+        <div class="cta-ornament">— ✦ —</div>
+        <h2>Are You a <em>Wedding</em><br>Professional?</h2>
+        <p>Join Kerala's most trusted wedding marketplace and connect with thousands of couples planning their perfect day.</p>
+        <a href="{% url 'vendor_register' %}" class="btn-gold">List Your Business</a>
+    </div>
+</section>
+
+<!-- ─── FOOTER ─────────────────────────────────── -->
+<footer>
+<div class="container">
+    <div class="row g-5">
+        <div class="col-lg-4">
+            <span class="footer-brand">💍 EventMarket</span>
+            <p class="footer-tagline">Kerala's premier luxury wedding marketplace.</p>
+            <div class="footer-socials">
+                <a href="#" class="social-link"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
+                <a href="#" class="social-link"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="social-link"><i class="bi bi-youtube"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-2 col-6">
+            <p class="footer-heading">Services</p>
+            <ul class="footer-links">
+                <li><a href="#">Photography</a></li>
+                <li><a href="#">Catering</a></li>
+                <li><a href="#">Decoration</a></li>
+                <li><a href="#">Music & DJ</a></li>
+                <li><a href="#">Transport</a></li>
+                <li><a href="#">Beauty</a></li>
+            </ul>
+        </div>
+        <div class="col-lg-2 col-6">
+            <p class="footer-heading">Company</p>
+            <ul class="footer-links">
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Press</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+        <div class="col-lg-4">
+            <p class="footer-heading">Newsletter</p>
+            <p class="footer-tagline" style="margin-bottom:16px">Inspiration, trends & exclusive offers — right to your inbox.</p>
+            <div class="d-flex">
+                <input type="email" placeholder="Your email address"
+                    style="background:rgba(255,255,255,0.06);border:1px solid rgba(201,168,76,0.25);border-right:none;color:white;padding:10px 16px;font-size:0.8rem;font-family:'Jost',sans-serif;outline:none;flex:1;min-width:0;">
+                <button class="btn-gold" style="padding:10px 20px;font-size:0.7rem;letter-spacing:2px;white-space:nowrap;">Subscribe</button>
+            </div>
+        </div>
+    </div>
+    <hr class="footer-divider">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <p class="footer-bottom mb-0">© 2026 EventMarket · All Rights Reserved</p>
+        <p class="footer-bottom mb-0">Privacy Policy · Terms of Service</p>
+    </div>
+</div>
+</footer>
+
+<script>
+// Navbar scroll
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+nav.classList.add('scrolled');
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        }
+    });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+
+// ─── Filter + Search + Sort ───────────────────────
+const filterTabs   = document.querySelectorAll('.filter-tab');
+const vendorItems  = document.querySelectorAll('.vendor-item');
+const searchInput  = document.getElementById('vendorSearch');
+const sortSelect   = document.getElementById('vendorSort');
+const resultCount  = document.getElementById('resultCount');
+const emptyState   = document.getElementById('emptyState');
+
+let activeFilter = 'all';
+let searchQuery  = '';
+let sortBy       = '';
+
+function applyFilters() {
+    let visible = [];
+
+    vendorItems.forEach(item => {
+        const category = item.dataset.category || '';
+        const name     = item.querySelector('.vendor-name')     ? item.querySelector('.vendor-name').textContent.toLowerCase()     : '';
+        const location = item.querySelector('.vendor-location') ? item.querySelector('.vendor-location').textContent.toLowerCase() : '';
+        const desc     = item.querySelector('.vendor-desc')     ? item.querySelector('.vendor-desc').textContent.toLowerCase()     : '';
+        const combined = name + ' ' + location + ' ' + desc + ' ' + category;
+
+        const matchFilter = activeFilter === 'all' || category.includes(activeFilter);
+        const matchSearch = searchQuery === '' || combined.includes(searchQuery.toLowerCase());
+
+        if (matchFilter && matchSearch) {
+            item.style.display = '';
+            visible.push(item);
+        } else {
+            item.style.display = 'none';
+        }
+    });
+
+    // Sort visible items
+    if (sortBy && visible.length > 1) {
+        const grid = document.getElementById('vendorGrid');
+        visible.sort((a, b) => {
+            const priceA = parseInt(a.dataset.price) || 0;
+            const priceB = parseInt(b.dataset.price) || 0;
+            if (sortBy === 'price_low')  return priceA - priceB;
+            if (sortBy === 'price_high') return priceB - priceA;
+            return 0;
+        });
+        visible.forEach(item => grid.appendChild(item));
+    }
+
+    resultCount.textContent = visible.length;
+    emptyState.style.display = (visible.length === 0 && vendorItems.length > 0) ? 'block' : 'none';
+}
+
+filterTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        filterTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        activeFilter = tab.dataset.filter;
+        applyFilters();
+    });
+});
+
+if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value;
+        applyFilters();
+    });
+}
+
+if (sortSelect) {
+    sortSelect.addEventListener('change', (e) => {
+        sortBy = e.target.value;
+        applyFilters();
+    });
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

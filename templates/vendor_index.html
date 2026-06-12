@@ -1,0 +1,211 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vendor Dashboard | EventMarket</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body {
+    background: linear-gradient(135deg, #0c0616, #1a0d2b);
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    min-height: 100vh;
+}
+
+/* NAVBAR */
+.navbar {
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(10px);
+}
+.navbar-brand {
+    color: #d4af37 !important;
+    font-weight: bold;
+}
+.nav-link { color: white !important; }
+.nav-link:hover { color: #d4af37 !important; }
+
+/* HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+.header h2 { color: #d4af37; }
+
+/* STATUS BANNER */
+.status-banner {
+    background: rgba(255, 193, 7, 0.15);
+    border: 1px solid rgba(255, 193, 7, 0.4);
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin-bottom: 24px;
+    color: #ffc107;
+    font-size: 0.95rem;
+}
+.status-banner.approved {
+    background: rgba(25, 200, 120, 0.15);
+    border-color: rgba(25, 200, 120, 0.4);
+    color: #19c878;
+}
+
+/* CARD */
+.service-card {
+    background: #1a0d2b;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: 0.3s;
+    border: 1px solid rgba(212,175,55,0.2);
+    height: 100%;
+}
+.service-card:hover { transform: translateY(-8px); }
+
+/* IMAGE */
+.service-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+/* BODY */
+.service-body { padding: 15px; }
+.service-body h5 { color: #d4af37; }
+.price { color: #00ffcc; font-weight: bold; }
+
+/* ADD SERVICE BUTTON */
+.btn-add {
+    background: #d4af37;
+    color: black;
+    font-weight: bold;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+.btn-add:hover {
+    background: #b8962e;
+    color: black;
+}
+.btn-add.disabled-btn {
+    background: #555;
+    color: #aaa;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+
+        <a class="navbar-brand" href="/">💍 EventMarket</a>
+
+        <button class="navbar-toggler bg-light" data-bs-toggle="collapse" data-bs-target="#menu">☰</button>
+
+        <div class="collapse navbar-collapse" id="menu">
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="vendor_index">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    {% if vendor.status == 'approved' %}
+                        <a class="nav-link text-warning fw-bold" href="{% url 'service_add' %}">
+                            + Add Service
+                        </a>
+                    {% else %}
+                        <span class="nav-link text-secondary" title="Requires admin approval">
+                            + Add Service (Pending Approval)
+                        </span>
+                    {% endif %}
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+</nav>
+
+<div class="container mt-4">
+
+    <!-- HEADER -->
+    <div class="header">
+        <h2>Welcome, {{ vendor.business_name }}</h2>
+    </div>
+
+    <!-- APPROVAL STATUS BANNER -->
+    {% if vendor.status == 'approved' %}
+        <div class="status-banner approved">
+            ✅ Your account is <strong>approved</strong>. You can add and manage services.
+        </div>
+    {% elif vendor.status == 'pending' %}
+        <div class="status-banner">
+            ⏳ Your account is <strong>pending admin approval</strong>. You cannot add services yet.
+        </div>
+    {% else %}
+        <div class="status-banner" style="border-color:rgba(255,80,80,0.4); color:#ff6b6b; background:rgba(255,80,80,0.1);">
+            ❌ Your account has been <strong>rejected</strong>. Please contact support.
+        </div>
+    {% endif %}
+
+    <!-- MESSAGES -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- SERVICES GRID -->
+    <div class="row">
+
+        {% for service in services %}
+        <div class="col-md-4 mb-4">
+            <div class="service-card">
+
+                {% if service.image %}
+                    <img src="{{ service.image.url }}" class="service-img" alt="service image">
+                {% else %}
+                    <img src="{% static 'profile.png' %}" class="service-img" alt="no image">
+                {% endif %}
+
+                <div class="service-body">
+                    <h5>{{ service.service_category }}</h5>
+                    <p>{{ service.description|truncatechars:80 }}</p>
+                    <p class="price">₹ {{ service.price }}</p>
+                </div>
+
+            </div>
+        </div>
+
+        {% empty %}
+        <div class="col-12 text-center mt-4">
+            <h4 style="color:#d4af37;">No services added yet</h4>
+            <p style="color:rgba(255,255,255,0.5);">
+                {% if vendor.status == 'approved' %}
+                    Click <strong>"+ Add Service"</strong> in the navbar to create your first service.
+                {% else %}
+                    You can add services once your account is approved by admin.
+                {% endif %}
+            </p>
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

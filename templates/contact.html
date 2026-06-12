@@ -1,0 +1,1156 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EventMarket | Contact Us</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-pale: #f5e9c8;
+    --deep: #0e0818;
+    --plum: #1e0a32;
+    --wine: #3a0040;
+    --cream: #fdf8f0;
+    --ivory: #f9f3e8;
+    --text-muted: #9b8a6e;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--deep);
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--deep); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+/* ─── NAVBAR ─────────────────────────────────── */
+.navbar {
+    background: transparent;
+    padding: 20px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.5s ease;
+}
+.navbar.scrolled {
+    background: rgba(14, 8, 24, 0.97);
+    padding: 12px 0;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+}
+.navbar-brand {
+    font-family: 'Cinzel', serif;
+    color: var(--gold) !important;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-decoration: none;
+}
+.navbar-brand span { color: white; font-weight: 400; }
+
+.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-links a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+    white-space: nowrap;
+}
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after { width: 100%; }
+.nav-links a.active { color: var(--gold); }
+.nav-links a.active::after { width: 100%; }
+
+.nav-cta {
+    background: transparent !important;
+    border: 1px solid var(--gold) !important;
+    color: var(--gold) !important;
+    padding: 8px 22px !important;
+    border-radius: 0 !important;
+    letter-spacing: 2px !important;
+    transition: all 0.3s !important;
+}
+.nav-cta:hover {
+    background: var(--gold) !important;
+    color: var(--deep) !important;
+}
+.nav-cta::after { display: none !important; }
+
+.dropdown-menu {
+    border-radius: 10px;
+    padding: 8px;
+    min-width: 150px;
+    background: rgba(14, 8, 24, 0.97);
+    border: 1px solid rgba(201,168,76,0.2);
+    backdrop-filter: blur(12px);
+    margin-top: 8px !important;
+}
+.dropdown-item {
+    border-radius: 6px;
+    padding: 9px 14px;
+    font-size: 0.82rem;
+    font-family: 'Jost', sans-serif;
+    letter-spacing: 0.5px;
+    color: rgba(255,255,255,0.75);
+    transition: all 0.25s;
+}
+.dropdown-item:hover {
+    background: rgba(201,168,76,0.12);
+    color: var(--gold);
+}
+
+/* ─── PAGE HERO ─────────────────────────────── */
+.page-hero {
+    height: 52vh;
+    min-height: 380px;
+    background: linear-gradient(
+        135deg,
+        rgba(14, 8, 24, 0.78),
+        rgba(58, 0, 64, 0.62)
+    ),
+    url('{% static "body.jpg" %}');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+.page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 80%, rgba(201,168,76,0.07) 0%, transparent 70%);
+    pointer-events: none;
+}
+.hero-frame {
+    position: absolute;
+    inset: 32px;
+    border: 1px solid rgba(201,168,76,0.25);
+    pointer-events: none;
+}
+.hero-frame::before, .hero-frame::after {
+    content: '';
+    position: absolute;
+    background: var(--gold);
+}
+.hero-frame::before { top: -1px; left: 40px; right: 40px; height: 1px; }
+.hero-frame::after  { bottom: -1px; left: 40px; right: 40px; height: 1px; }
+
+.page-hero-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.3s forwards;
+}
+.page-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 5vw, 4.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 18px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.5s forwards;
+}
+.page-hero h1 em { font-style: italic; color: var(--gold-light); }
+.page-hero p {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.65);
+    max-width: 420px;
+    margin: 0 auto;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.7s forwards;
+}
+
+/* ─── MARQUEE STRIP ──────────────────────────── */
+.marquee-strip {
+    background: var(--gold);
+    padding: 13px 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.marquee-track {
+    display: inline-flex;
+    animation: marquee 25s linear infinite;
+}
+.marquee-item {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--deep);
+    padding: 0 48px;
+}
+.marquee-dot { color: rgba(14,8,24,0.4); }
+
+/* ─── CONTACT SECTION ────────────────────────── */
+.contact-section {
+    padding: 100px 0 120px;
+    background: var(--ivory);
+}
+
+.section-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 16px;
+    display: block;
+}
+.section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--deep);
+    margin-bottom: 20px;
+}
+.section-title em { font-style: italic; color: var(--gold); }
+.section-lead {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.9;
+    max-width: 420px;
+}
+
+/* Info Cards */
+.info-card {
+    background: white;
+    border: 1px solid rgba(201,168,76,0.15);
+    padding: 28px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    transition: all 0.35s;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+.info-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--gold), var(--gold-light));
+    transform: scaleY(0);
+    transition: transform 0.35s;
+    transform-origin: bottom;
+}
+.info-card:hover { transform: translateX(6px); border-color: rgba(201,168,76,0.35); }
+.info-card:hover::before { transform: scaleY(1); }
+
+.info-icon {
+    width: 46px;
+    height: 46px;
+    background: var(--gold-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.info-icon i {
+    color: var(--gold);
+    font-size: 1.15rem;
+}
+.info-label {
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+.info-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--deep);
+    line-height: 1.4;
+}
+.info-value a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+.info-value a:hover { color: var(--gold); }
+
+/* Social strip */
+.social-strip {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+}
+.social-btn {
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(201,168,76,0.25);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+.social-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(201,168,76,0.06);
+}
+
+/* ─── CONTACT FORM ────────────────────────────── */
+.form-card {
+    background: white;
+    border: 1px solid rgba(201,168,76,0.15);
+    padding: 48px 44px;
+    position: relative;
+}
+.form-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+}
+
+.form-card .form-label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+.form-card .form-control,
+.form-card .form-select {
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 0;
+    background: var(--cream);
+    color: var(--deep);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    padding: 12px 16px;
+    transition: border-color 0.3s, background 0.3s;
+    outline: none;
+    box-shadow: none;
+}
+.form-card .form-control:focus,
+.form-card .form-select:focus {
+    border-color: rgba(201,168,76,0.55);
+    background: white;
+    box-shadow: none;
+}
+.form-card .form-control::placeholder { color: rgba(0,0,0,0.3); }
+.form-card textarea.form-control { resize: none; }
+
+.form-card .form-select option { background: white; color: var(--deep); }
+
+.form-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem;
+    font-weight: 300;
+    color: var(--deep);
+    margin-bottom: 6px;
+}
+.form-heading em { font-style: italic; color: var(--gold); }
+.form-subtext {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    margin-bottom: 36px;
+    line-height: 1.7;
+}
+
+.btn-submit {
+    background: var(--gold);
+    color: var(--deep);
+    border: none;
+    padding: 14px 44px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+}
+.btn-submit:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(201,168,76,0.3);
+}
+
+/* Success message */
+.form-success {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+}
+.form-success .success-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--gold-pale);
+    border: 1px solid rgba(201,168,76,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 1.5rem;
+    color: var(--gold);
+}
+.form-success h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--deep);
+    margin-bottom: 10px;
+}
+.form-success p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    line-height: 1.8;
+}
+
+/* ─── MAP SECTION ─────────────────────────────── */
+.map-section {
+    background: var(--deep);
+    padding: 80px 0 0;
+    border-top: 1px solid rgba(201,168,76,0.12);
+}
+.map-header {
+    text-align: center;
+    padding-bottom: 48px;
+}
+.map-header .section-eyebrow { color: var(--gold-light); }
+.map-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 300;
+    color: white;
+    margin-bottom: 0;
+}
+.map-header h2 em { font-style: italic; color: var(--gold-light); }
+.map-wrap {
+    position: relative;
+    height: 420px;
+    overflow: hidden;
+    border-top: 3px solid var(--gold);
+}
+.map-wrap iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    filter: saturate(0.5) contrast(1.1);
+    opacity: 0.85;
+}
+.map-overlay-badge {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(14,8,24,0.9);
+    border: 1px solid rgba(201,168,76,0.35);
+    color: white;
+    padding: 12px 28px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    backdrop-filter: blur(8px);
+}
+.map-overlay-badge i { color: var(--gold); margin-right: 8px; }
+
+/* ─── FAQ SECTION ─────────────────────────────── */
+.faq-section {
+    padding: 100px 0;
+    background: var(--cream);
+}
+.faq-title-wrap {
+    text-align: center;
+    margin-bottom: 60px;
+}
+.accordion-item {
+    background: white;
+    border: 1px solid rgba(201,168,76,0.15) !important;
+    border-radius: 0 !important;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+.accordion-button {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--deep) !important;
+    background: white !important;
+    padding: 20px 24px;
+    letter-spacing: 0.3px;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+.accordion-button:not(.collapsed) {
+    color: var(--gold) !important;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+}
+.accordion-button::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23c9a84c'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !important;
+}
+.accordion-body {
+    font-size: 0.85rem;
+    color: #666;
+    font-weight: 300;
+    line-height: 1.85;
+    padding: 20px 24px 24px;
+    background: white;
+}
+
+/* ─── CTA BANNER ─────────────────────────────── */
+.cta-banner {
+    background: linear-gradient(135deg, var(--plum), var(--wine));
+    padding: 90px 0;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+.cta-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 60% 80% at 20% 50%, rgba(201,168,76,0.1) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(201,168,76,0.08) 0%, transparent 60%);
+}
+.cta-ornament {
+    color: var(--gold);
+    font-size: 1.5rem;
+    letter-spacing: 12px;
+    opacity: 0.5;
+    margin-bottom: 24px;
+}
+.cta-banner h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    font-weight: 300;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    position: relative;
+}
+.cta-banner h2 em { font-style: italic; color: var(--gold-light); }
+.cta-banner p {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.95rem;
+    font-weight: 300;
+    margin-bottom: 40px;
+    max-width: 420px;
+    margin-left: auto; margin-right: auto;
+    line-height: 1.8;
+    position: relative;
+}
+.btn-gold {
+    background: var(--gold);
+    color: var(--deep);
+    border: none;
+    padding: 14px 40px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    border-radius: 0;
+    text-decoration: none;
+    transition: all 0.3s;
+    display: inline-block;
+    position: relative;
+}
+.btn-gold:hover {
+    background: var(--gold-light);
+    color: var(--deep);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(201,168,76,0.35);
+}
+
+/* ─── FOOTER ─────────────────────────────────── */
+footer {
+    background: var(--deep);
+    padding: 70px 0 28px;
+    border-top: 1px solid rgba(201,168,76,0.15);
+}
+.footer-brand {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+    display: block;
+}
+.footer-tagline {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.35);
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin-bottom: 32px;
+}
+.footer-heading {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+}
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: 10px; }
+.footer-links a {
+    color: rgba(255,255,255,0.45);
+    text-decoration: none;
+    font-size: 0.83rem;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    transition: color 0.3s;
+}
+.footer-links a:hover { color: var(--gold); }
+.footer-divider {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin: 48px 0 24px;
+}
+.footer-bottom {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 1px;
+}
+.footer-socials { display: flex; gap: 20px; }
+.social-link {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(201,168,76,0.25);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+}
+.social-link:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(201,168,76,0.08);
+}
+
+/* ─── ANIMATIONS ─────────────────────────────── */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ─── RESPONSIVE ─────────────────────────────── */
+@media (max-width: 991px) {
+    .navbar-collapse {
+        background: rgba(14, 8, 24, 0.98);
+        backdrop-filter: blur(16px);
+        border-top: 1px solid rgba(201,168,76,0.15);
+        margin-top: 12px;
+        padding: 8px 0 16px;
+    }
+    .nav-links {
+        display: flex !important;
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+    }
+    .nav-links a {
+        padding: 13px 24px;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        font-size: 0.82rem;
+        letter-spacing: 2px;
+    }
+    .nav-links a::after { display: none; }
+    .nav-cta {
+        margin: 14px 24px 4px !important;
+        display: block;
+        text-align: center;
+        padding: 12px 24px !important;
+    }
+    .navbar-toggler:focus { box-shadow: none; outline: none; }
+    .form-card { padding: 32px 24px; }
+}
+
+@media (max-width: 768px) {
+    .hero-frame { inset: 16px; }
+    .map-wrap { height: 280px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ─── NAVBAR ─────────────────────────────────── -->
+<nav class="navbar navbar-expand-lg" id="mainNav">
+<div class="container">
+
+    <a class="navbar-brand" href="/">💍 Event<span>Market</span></a>
+    <button class="navbar-toggler" type="button"
+        data-bs-toggle="collapse" data-bs-target="#navMenu"
+        aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation"
+        style="border:1px solid rgba(201,168,76,0.45); padding:7px 10px; background:transparent;">
+        <span style="display:block;width:22px;height:2px;background:var(--gold);margin:5px 0;"></span>
+        <span style="display:block;width:22px;height:2px;background:var(--gold);margin:5px 0;"></span>
+        <span style="display:block;width:22px;height:2px;background:var(--gold);margin:5px 0;"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMenu">
+        <div class="nav-links ms-auto align-items-center">
+            <a href="/">Home</a>
+            <a href="/vendors">Our Vendors</a>
+            <a href="/contact" class="active">Contact</a>
+        </div>
+    </div>
+
+</div>
+</nav>
+
+<!-- ─── PAGE HERO ──────────────────────────────── -->
+<section class="page-hero">
+    <div class="hero-frame"></div>
+    <div class="container text-center position-relative" style="z-index:2">
+        <p class="page-hero-eyebrow">We'd Love to Hear From You</p>
+        <h1>Get in <em>Touch</em></h1>
+        <p>Whether you're a couple planning your dream day or a vendor wanting to join our marketplace — we're here for you.</p>
+    </div>
+</section>
+
+
+<!-- ─── CONTACT SECTION ────────────────────────── -->
+<section class="contact-section">
+    <div class="container">
+        <div class="row g-5 align-items-start">
+
+            <!-- Left — Info -->
+            <div class="col-lg-5 reveal">
+                <span class="section-eyebrow">Contact Information</span>
+                <h2 class="section-title">Let's Start a <em>Conversation</em></h2>
+                <p class="section-lead mb-5">Our dedicated team is available to assist couples, vendors, and partners across Kerala. Reach out — we respond within 24 hours.</p>
+
+                <div class="info-card">
+                    <div class="info-icon"><i class="bi bi-telephone-fill"></i></div>
+                    <div>
+                        <p class="info-label">Phone</p>
+                        <p class="info-value"><a href="tel:+919876543210">+91 98765 43210</a><br><a href="tel:+914842345678">+91 484 234 5678</a></p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon"><i class="bi bi-envelope-fill"></i></div>
+                    <div>
+                        <p class="info-label">Email</p>
+                        <p class="info-value"><a href="mailto:support@eventmarket.com">support@eventmarket.com</a><br></p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon"><i class="bi bi-geo-alt-fill"></i></div>
+                    <div>
+                        <p class="info-label">Office Address</p>
+                        <p class="info-value">EventMarket Pvt. Ltd.
+                                            2nd Floor,Business Center,
+                                            Near Alappuzha,
+                                             688 005,
+                                            Kerala, India</p>
+                    </div>
+                </div>
+
+                <div class="info-card" style="margin-bottom:0">
+                    <div class="info-icon"><i class="bi bi-clock-fill"></i></div>
+                    <div>
+                        <p class="info-label">Working Hours</p>
+                        <p class="info-value">Mon – Sat: 9:00 AM – 7:00 PM<br>Sunday: 10:00 AM – 4:00 PM</p>
+                    </div>
+                </div>
+
+                <div class="social-strip">
+                    <a href="#" class="social-btn"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="social-btn"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="social-btn"><i class="bi bi-linkedin"></i></a>
+                    <a href="#" class="social-btn"><i class="bi bi-youtube"></i></a>
+                    <a href="#" class="social-btn"><i class="bi bi-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <!-- Right — Form -->
+            <div class="col-lg-7 reveal">
+                <div class="form-card">
+                    <h3 class="form-heading">Send Us a <em>Message</em></h3>
+                    <p class="form-subtext">Fill in the form below and one of our team members will get back to you shortly.</p>
+
+                    <form id="contactForm" novalidate>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">First Name *</label>
+                                <input type="text" class="form-control" id="firstName" placeholder="Your first name" required>
+                                <div class="invalid-feedback" style="font-size:0.75rem; color:#c9433a; margin-top:6px;">Please enter your first name.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Last Name *</label>
+                                <input type="text" class="form-control" id="lastName" placeholder="Your last name" required>
+                                <div class="invalid-feedback" style="font-size:0.75rem; color:#c9433a; margin-top:6px;">Please enter your last name.</div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Email Address *</label>
+                                <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
+                                <div class="invalid-feedback" style="font-size:0.75rem; color:#c9433a; margin-top:6px;">Please enter a valid email.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone" placeholder="+91 00000 00000">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">I Am Enquiring As *</label>
+                            <select class="form-select" id="enquiryType" required>
+                                <option value="" disabled selected>Select an option</option>
+                                <option value="couple">A Couple Planning a Wedding</option>
+                                <option value="vendor">A Vendor / Business Owner</option>
+                                <option value="partner">A Corporate Partner</option>
+                                <option value="media">Press / Media</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <div class="invalid-feedback" style="font-size:0.75rem; color:#c9433a; margin-top:6px;">Please select an enquiry type.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Subject *</label>
+                            <input type="text" class="form-control" id="subject" placeholder="Brief subject of your enquiry" required>
+                            <div class="invalid-feedback" style="font-size:0.75rem; color:#c9433a; margin-top:6px;">Please enter a subject.</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Message *</label>
+                            <textarea class="form-control" id="message" rows="5" placeholder="Tell us how we can help you..." required></textarea>
+                            <div class="invalid-feedback" style="font-size:0.75rem; color:#c9433a; margin-top:6px;">Please write your message.</div>
+                        </div>
+
+                        <!-- Honeypot -->
+                        <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
+
+                        <button type="submit" class="btn-submit" id="submitBtn">
+                            <span id="btnText">Send Message</span>
+                            <span id="btnLoader" style="display:none">
+                                <span class="spinner-border spinner-border-sm me-2" role="status"></span>Sending...
+                            </span>
+                        </button>
+                    </form>
+
+                    <!-- Success State -->
+                    <div class="form-success" id="formSuccess">
+                        <div class="success-icon"><i class="bi bi-check-lg"></i></div>
+                        <h4>Message Received!</h4>
+                        <p>Thank you for reaching out. Our team will review your enquiry and respond to your email within 24 hours.</p>
+                        <button class="btn-submit mt-4" style="width:auto; padding:12px 36px;" onclick="resetForm()">Send Another Message</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ─── MAP SECTION ─────────────────────────────── -->
+<section class="map-section">
+    <div class="container">
+        <div class="map-header reveal">
+            <span class="section-eyebrow">Find Us</span>
+            <h2>Our <em>Location</em></h2>
+        </div>
+    </div>
+    <div class="map-wrap">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3936.153430926323!2d76.36065107314901!3d9.407932282946161!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zOcKwMjQnMjguNSJOIDc2wrAyMSc0Ny42IkU!5e0!3m2!1sen!2sin!4v1775787628004!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+</section>
+
+<!-- ─── FAQ SECTION ───────────────────────────── -->
+<section class="faq-section">
+    <div class="container">
+        <div class="faq-title-wrap reveal">
+            <span class="section-eyebrow" style="display:block;text-align:center;">Support</span>
+            <h2 class="section-title" style="text-align:center;">Frequently Asked <em>Questions</em></h2>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8 reveal">
+                <div class="accordion" id="faqAccordion">
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                How do I book a vendor through EventMarket?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">Browse our curated vendor directory, click "View Profile" on any vendor you like, and use the enquiry or booking form on their profile page. Our team also assists with personalised matchmaking — just reach out via this contact form.</div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                How can I list my business on EventMarket?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">Click "Vendor Register" in the navigation or the "List Your Business" button on any page to begin your onboarding. Our team reviews all applications within 3–5 business days. Featured placements and premium packages are available after verification.</div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                Is EventMarket only for Kerala weddings?
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">We currently specialise in Kerala, with vendors across Kochi, Thiruvananthapuram, Thrissur, Kozhikode and all major districts. We are expanding to other South Indian states in 2026 — stay tuned!</div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                How long does it take to receive a reply?
+                            </button>
+                        </h2>
+                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">We aim to respond to all enquiries within 24 hours on working days. For urgent matters, please call us directly on +91 98765 43210 or reach out via WhatsApp for a faster response.</div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                Do you offer wedding planning services?
+                            </button>
+                        </h2>
+                        <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">EventMarket is a marketplace that connects couples with verified vendors. While we do not directly plan weddings, our concierge team can help you shortlist the right professionals, coordinate introductions, and guide you through the planning process.</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── CTA BANNER ─────────────────────────────── -->
+<section class="cta-banner">
+    <div class="container position-relative">
+        <div class="cta-ornament">— ✦ —</div>
+        <h2>Are You a <em>Wedding</em><br>Professional?</h2>
+        <p>Join Kerala's most trusted wedding marketplace and connect with thousands of couples planning their perfect day.</p>
+        <a href="#" class="btn-gold">List Your Business</a>
+    </div>
+</section>
+
+<!-- ─── FOOTER ─────────────────────────────────── -->
+<footer>
+<div class="container">
+    <div class="row g-5">
+        <div class="col-lg-4">
+            <span class="footer-brand">💍 EventMarket</span>
+            <p class="footer-tagline">Kerala's premier luxury wedding marketplace.</p>
+            <div class="footer-socials">
+                <a href="#" class="social-link"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
+                <a href="#" class="social-link"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="social-link"><i class="bi bi-youtube"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-2 col-6">
+            <p class="footer-heading">Services</p>
+            <ul class="footer-links">
+                <li><a href="#">Photography</a></li>
+                <li><a href="#">Catering</a></li>
+                <li><a href="#">Decoration</a></li>
+                <li><a href="#">Music & DJ</a></li>
+                <li><a href="#">Transport</a></li>
+                <li><a href="#">Beauty</a></li>
+            </ul>
+        </div>
+        <div class="col-lg-2 col-6">
+            <p class="footer-heading">Company</p>
+            <ul class="footer-links">
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Press</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </div>
+        <div class="col-lg-4">
+            <p class="footer-heading">Newsletter</p>
+            <p class="footer-tagline" style="margin-bottom:16px">Inspiration, trends & exclusive offers — right to your inbox.</p>
+            <div class="d-flex">
+                <input type="email" placeholder="Your email address"
+                    style="background:rgba(255,255,255,0.06);border:1px solid rgba(201,168,76,0.25);border-right:none;color:white;padding:10px 16px;font-size:0.8rem;font-family:'Jost',sans-serif;outline:none;flex:1;min-width:0;">
+                <button class="btn-gold" style="padding:10px 20px;font-size:0.7rem;letter-spacing:2px;white-space:nowrap;">Subscribe</button>
+            </div>
+        </div>
+    </div>
+    <hr class="footer-divider">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <p class="footer-bottom mb-0">© 2026 EventMarket · All Rights Reserved</p>
+        <p class="footer-bottom mb-0">Privacy Policy · Terms of Service</p>
+    </div>
+</div>
+</footer>
+
+<script>
+// Navbar
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+nav.classList.add('scrolled');
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add('visible'), i * 100);
+        }
+    });
+}, { threshold: 0.08 });
+reveals.forEach(el => observer.observe(el));
+
+// Form submission
+const form = document.getElementById('contactForm');
+const formSuccess = document.getElementById('formSuccess');
+const btnText = document.getElementById('btnText');
+const btnLoader = document.getElementById('btnLoader');
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Validate
+    const fields = ['firstName', 'lastName', 'email', 'enquiryType', 'subject', 'message'];
+    let valid = true;
+
+    fields.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el.value.trim()) {
+            el.classList.add('is-invalid');
+            valid = false;
+        } else {
+            el.classList.remove('is-invalid');
+            el.classList.add('is-valid');
+        }
+    });
+
+    // Email format check
+    const emailEl = document.getElementById('email');
+    if (emailEl.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value)) {
+        emailEl.classList.add('is-invalid');
+        valid = false;
+    }
+
+    if (!valid) return;
+
+    // Simulate send
+    btnText.style.display = 'none';
+    btnLoader.style.display = 'inline';
+    document.getElementById('submitBtn').disabled = true;
+
+    setTimeout(() => {
+        form.style.display = 'none';
+        formSuccess.style.display = 'block';
+    }, 1800);
+});
+
+// Remove invalid on input
+document.querySelectorAll('.form-control, .form-select').forEach(el => {
+    el.addEventListener('input', () => {
+        el.classList.remove('is-invalid');
+    });
+});
+
+function resetForm() {
+    form.reset();
+    form.querySelectorAll('.is-valid, .is-invalid').forEach(el => {
+        el.classList.remove('is-valid', 'is-invalid');
+    });
+    btnText.style.display = 'inline';
+    btnLoader.style.display = 'none';
+    document.getElementById('submitBtn').disabled = false;
+    form.style.display = 'block';
+    formSuccess.style.display = 'none';
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
